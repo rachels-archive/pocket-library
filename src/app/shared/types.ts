@@ -26,3 +26,28 @@ export interface Options {
       }
     | boolean;
 }
+
+export interface Books {
+  items: Book[];
+  total: number;
+  page: number;
+  perPage: number;
+  totalPages: number;
+}
+
+export interface Book {
+  name: string;
+  author: string;
+  imageUrl: string;
+  rating: number;
+}
+
+export interface PaginationParams {
+  [param: string]:
+    | string
+    | number
+    | boolean
+    | readonly (string | number | boolean)[];
+  page: number;
+  perPage: number;
+}
