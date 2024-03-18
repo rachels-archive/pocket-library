@@ -1,0 +1,16 @@
+/*img {
+  max-height: 380px;
+}
+*/
+
+.wrapper {
+  width: 250px;
+  text-align: center;
+
+  img {
+    aspect-ratio: 3/4;
+    object-fit: contain;
+    width: 100%;
+    border-radius: 15px;
+  }
+}

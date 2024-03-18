@@ -1,0 +1,13 @@
+<div class="column gap-1 wrapper">
+  <img [src]="book.image" alt="{{ book.name }}" />
+
+  <h2 class="title">{{ book.name }}</h2>
+
+  <p class="author">{{ book.author }}</p>
+
+  <p-rating
+    [(ngModel)]="book.rating"
+    [readonly]="true"
+    [cancel]="false"
+  ></p-rating>
+</div>
