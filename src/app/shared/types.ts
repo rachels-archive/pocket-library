@@ -38,7 +38,7 @@ export interface Books {
 export interface Book {
   name: string;
   author: string;
-  imageUrl: string;
+  image: string;
   rating: number;
 }
 

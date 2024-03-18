@@ -1,1 +1,19 @@
-<p>home works!</p>
+<div class="column gap-1">
+  <!--books section-->
+  <div class="row wrap gap-1 align-center justify-center">
+    @for(book of books; track $index) {
+    <div class="book-container">
+      <app-book [book]="book" (selectedBook)="onSelectBook($event)"></app-book>
+    </div>
+    }
+  </div>
+
+  <!--paginator-->
+
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="0"
+    [rows]="8"
+    [totalRecords]="bookCount"
+  ></p-paginator>
+</div>
