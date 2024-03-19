@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BooksService } from '../services/books.service';
 import { Book, Books } from '../shared/types';
 import { BookComponent } from '../components/book/book.component';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { Paginator, PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { ModalComponent } from '../components/modal/modal.component';
 import { ButtonModule } from 'primeng/button';
 
@@ -31,6 +31,8 @@ export class HomeComponent implements OnInit {
 
   showAddModal: boolean = false;
   showEditModal: boolean = false;
+
+  @ViewChild('paginator') paginator: Paginator | undefined;
 
   openAddModal() {
     this.showAddModal = true;
@@ -61,7 +63,9 @@ export class HomeComponent implements OnInit {
     this.showAddModal = false;
   }
 
-  onAddBook() {}
+  resetPaginator() {
+    this.paginator?.changePage(0);
+  }
 
   onConfirmEdit(book: Book) {
     if (!this.selectedBook.id) {
@@ -104,9 +108,21 @@ export class HomeComponent implements OnInit {
   }
 
   addBook(book: Book) {
+    const booksPerPage = 8; // Number of books per page
+    const currentPage = this.paginator ? this.paginator.getPage() : 0; // Get the current page number
+
+    // If the current page is full, increment the page number
+    if (this.books.length >= (currentPage + 1) * booksPerPage) {
+      if (this.paginator) {
+        this.paginator.changePage(currentPage + 1); // Go to the next page
+      }
+    }
+
     this.booksService.addBook(`${this.API_ENDPOINT}`, book).subscribe({
       next: (data) => {
         console.log(data);
+        this.books.push(book);
+        this.bookCount++;
       },
       error: (err) => {
         console.log(err);
