@@ -1,0 +1,50 @@
+<p-dialog
+  header="{{ header }}"
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="false"
+>
+  <div class="column gap-1">
+    <div class="row">
+      <span>Name:</span>
+      <input type="text" [(ngModel)]="book.name" />
+    </div>
+
+    <div class="row">
+      <span>Image:</span>
+      <input type="text" [(ngModel)]="book.image" />
+    </div>
+
+    <div class="row">
+      <span>Author:</span>
+      <input type="text" [(ngModel)]="book.author" />
+    </div>
+
+    <div class="row">
+      <span>Rating:</span>
+      <p-rating
+        [(ngModel)]="book.rating"
+        [readonly]="false"
+        [cancel]="false"
+      ></p-rating>
+    </div>
+  </div>
+  <p-footer>
+    <button
+      type="button"
+      pButton
+      label="{{ header == 'Add Book' ? 'Add' : 'Save' }}"
+      class="p-button-success"
+      icon="pi pi-check"
+      (click)="onConfirm()"
+    ></button>
+    <button
+      type="button"
+      pButton
+      label="Cancel"
+      class="p-button-secondary"
+      icon="pi pi-times"
+      (click)="onCancel()"
+    ></button>
+  </p-footer>
+</p-dialog>

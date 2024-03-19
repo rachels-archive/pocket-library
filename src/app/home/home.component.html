@@ -1,9 +1,19 @@
 <div class="column gap-1">
+  <button
+    pButton
+    label="Add Book"
+    class="p-button-success"
+    (click)="openAddModal()"
+  ></button>
   <!--books section-->
   <div class="row wrap gap-1 align-center justify-center">
     @for(book of books; track $index) {
     <div class="book-container">
-      <app-book [book]="book" (selectedBook)="onSelectBook($event)"></app-book>
+      <app-book
+        [book]="book"
+        (edit)="openEditModal($event)"
+        (delete)="openDeletePopup($event)"
+      ></app-book>
     </div>
     }
   </div>
@@ -16,4 +26,19 @@
     [rows]="8"
     [totalRecords]="bookCount"
   ></p-paginator>
+
+  <app-modal
+    [visible]="showAddModal"
+    (confirm)="onConfirmAdd($event)"
+    (cancel)="hideAddModal()"
+    header="Add Book"
+  ></app-modal>
 </div>
+
+<app-modal
+  [book]="selectedBook"
+  [visible]="showEditModal"
+  (confirm)="onConfirmEdit($event)"
+  (cancel)="hideEditModal()"
+  header="Edit Book"
+></app-modal>

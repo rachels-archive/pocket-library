@@ -10,4 +10,25 @@
     [readonly]="true"
     [cancel]="false"
   ></p-rating>
+
+  <div class="row justify-center gap-1">
+    <button
+      type="button"
+      pButton
+      label="Edit"
+      icon="pi pi-pencil"
+      (click)="editBook()"
+      class=""
+    ></button>
+    <button
+      type="button"
+      pButton
+      label="Delete"
+      icon="pi pi-trash"
+      (click)="confirmDelete($event)"
+      class="p-button-danger"
+    ></button>
+  </div>
 </div>
+
+<p-confirmPopup></p-confirmPopup>
