@@ -1,9 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { Book } from '../../shared/types';
 import { ButtonModule } from 'primeng/button';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 
 @Component({
@@ -13,14 +26,15 @@ import { RatingModule } from 'primeng/rating';
     DialogModule,
     CommonModule,
     ButtonModule,
-    FormsModule,
     ReactiveFormsModule,
     RatingModule,
   ],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
 })
-export class ModalComponent {
+export class ModalComponent implements OnChanges {
+  constructor(private formBuilder: FormBuilder) {}
+
   @Input() visible: boolean = false;
   @Input() header!: string;
 
@@ -34,8 +48,35 @@ export class ModalComponent {
     rating: 0,
   };
 
+  specialCharValidator(): ValidatorFn {
+    return (control) => {
+      const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(
+        control.value
+      );
+      return hasSpecialChar ? { hasSpecialChar: true } : null;
+    };
+  }
+
+  bookForm = this.formBuilder.group({
+    name: ['', [Validators.required, this.specialCharValidator()]],
+    image: [''],
+    author: ['', [Validators.required, this.specialCharValidator()]],
+    rating: [0],
+  });
+
+  ngOnChanges() {
+    this.bookForm.patchValue(this.book);
+  }
+
   onConfirm() {
-    this.confirm.emit(this.book);
+    const { name, image, author, rating } = this.bookForm.value;
+
+    this.confirm.emit({
+      name: name || '',
+      image: image || '',
+      author: author || '',
+      rating: rating || 0,
+    });
   }
 
   onCancel() {

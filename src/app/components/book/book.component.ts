@@ -21,9 +21,7 @@ export class BookComponent implements OnInit {
   @Output() edit: EventEmitter<Book> = new EventEmitter<Book>();
   @Output() delete: EventEmitter<Book> = new EventEmitter<Book>();
 
-  ngOnInit(): void {
-    //this.selectedBook.emit(this.book);
-  }
+  ngOnInit(): void {}
 
   editBook() {
     this.edit.emit(this.book);

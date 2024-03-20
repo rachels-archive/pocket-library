@@ -87,7 +87,18 @@ export class HomeComponent implements OnInit {
   editBook(book: Book, id: number) {
     this.booksService.editBook(`${this.API_ENDPOINT}/${id}`, book).subscribe({
       next: (data) => {
-        console.log(data);
+        const updatedBooks = this.books.map((b) => {
+          if (b.id === id) {
+            return { ...b, ...book }; // Merge the existing book object with the updated properties
+          } else {
+            return b;
+          }
+        });
+
+        this.books = updatedBooks;
+
+        // Close the modal
+        this.showEditModal = false;
       },
       error: (err) => {
         console.log(err);
@@ -108,6 +119,7 @@ export class HomeComponent implements OnInit {
   }
 
   addBook(book: Book) {
+    /*
     const booksPerPage = 8; // Number of books per page
     const currentPage = this.paginator ? this.paginator.getPage() : 0; // Get the current page number
 
@@ -116,13 +128,14 @@ export class HomeComponent implements OnInit {
       if (this.paginator) {
         this.paginator.changePage(currentPage + 1); // Go to the next page
       }
-    }
+    }*/
 
     this.booksService.addBook(`${this.API_ENDPOINT}`, book).subscribe({
       next: (data) => {
         console.log(data);
         this.books.push(book);
-        this.bookCount++;
+        //    this.bookCount++;
+        this.showAddModal = false;
       },
       error: (err) => {
         console.log(err);

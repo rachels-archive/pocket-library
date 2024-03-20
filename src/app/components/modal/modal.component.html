@@ -4,28 +4,28 @@
   [modal]="true"
   [closable]="false"
 >
-  <div class="column gap-1">
+  <div class="column gap-1" [formGroup]="bookForm">
     <div class="row">
       <span>Name:</span>
-      <input type="text" [(ngModel)]="book.name" />
+      <input type="text" formControlName="name" />
     </div>
 
     <div class="row">
       <span>Image:</span>
-      <input type="text" [(ngModel)]="book.image" />
+      <input type="text" formControlName="image" />
     </div>
 
     <div class="row">
       <span>Author:</span>
-      <input type="text" [(ngModel)]="book.author" />
+      <input type="text" formControlName="author" />
     </div>
 
     <div class="row">
       <span>Rating:</span>
       <p-rating
-        [(ngModel)]="book.rating"
         [readonly]="false"
         [cancel]="false"
+        formControlName="rating"
       ></p-rating>
     </div>
   </div>
@@ -36,6 +36,7 @@
       label="{{ header == 'Add Book' ? 'Add' : 'Save' }}"
       class="p-button-success"
       icon="pi pi-check"
+      [class.disabled]="!bookForm.valid"
       (click)="onConfirm()"
     ></button>
     <button
