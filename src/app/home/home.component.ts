@@ -16,7 +16,7 @@ import { ButtonModule } from 'primeng/button';
 export class HomeComponent implements OnInit {
   constructor(private booksService: BooksService) {}
 
-  API_ENDPOINT = 'http://localhost:3000/books';
+  API_ENDPOINT = 'https://pocket-library-backend.onrender.com/books';
 
   books: Book[] = [];
   bookCount: number = 0;
